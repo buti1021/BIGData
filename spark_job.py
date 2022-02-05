@@ -6,7 +6,7 @@ from pyspark.sql.functions import udf
 
 path = "/opt/conda/miniconda3/lib/python3.8/site-packages/irsx/CSV/index_2021.csv"
 
-df21 = pd.read_csv(path, index_col=False, dtype=str, nrows= 50) # read all as string, not beautiful but we only need object id anyways
+df21 = pd.read_csv(path, index_col=False, dtype=str, nrows= 100) # read all as string, not beautiful but we only need object id anyways
 df21.head()
 spark = SparkSession.builder.getOrCreate()
 sdf = spark.createDataFrame(df21["OBJECT_ID"], StringType())
@@ -83,6 +83,6 @@ anz = sdf.count()
 print(anz)
 sdf2 = sdf.withColumn('valuelist', spark_transform_data('value')).select("valuelist.*")
 sdf2.explain()
-pdf = sdf2.toPandas()
-pdf.to_csv(f"hdfs://big-spark-cluster-m/user/root/{anz}.csv", index=False)
-pdf.to_parquet(f"hdfs://big-spark-cluster-m/user/root/{anz}.parquet", index=False)
+#pdf = sdf2.toPandas() inefficient
+sdf2.write.csv(f"hdfs://big-spark-cluster-m/user/root/{anz}ps.csv", index=False)
+sdf2.write.save(f"hdfs://big-spark-cluster-m/user/root/{anz}ps.parquet", index=False)
