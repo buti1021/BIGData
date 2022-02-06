@@ -84,5 +84,5 @@ print(anz)
 sdf2 = sdf.withColumn('valuelist', spark_transform_data('value')).select("valuelist.*")
 sdf2.explain()
 #pdf = sdf2.toPandas() inefficient
-sdf2.write.mode('overwrite').csv(f"hdfs://big-spark-cluster-m/user/root/{anz}ps.csv", index=False)
-sdf2.write.mode('overwrite').save(f"hdfs://big-spark-cluster-m/user/root/{anz}ps.parquet", index=False)
+sdf2.write.mode('overwrite').csv(f"hdfs://big-spark-cluster-m/user/root/{anz}ps.csv")
+sdf2.write.mode('overwrite').save(f"hdfs://big-spark-cluster-m/user/root/{anz}ps.parquet")
