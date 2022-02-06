@@ -6,7 +6,7 @@ from pyspark.sql.functions import udf
 
 path = "/opt/conda/miniconda3/lib/python3.8/site-packages/irsx/CSV/index_2021.csv"
 
-df21 = pd.read_csv(path, index_col=False, dtype=str, nrows= 100) # read all as string, not beautiful but we only need object id anyways
+df21 = pd.read_csv(path, index_col=False, dtype=str, nrows= 10000) # read all as string, not beautiful but we only need object id anyways
 df21.head()
 spark = SparkSession.builder.getOrCreate()
 sdf = spark.createDataFrame(df21["OBJECT_ID"], StringType())
